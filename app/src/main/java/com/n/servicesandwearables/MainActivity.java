@@ -1,11 +1,14 @@
 package com.n.servicesandwearables;
 
+import android.app.Notification;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import createChannel.createChannel;
 
 public class MainActivity extends AppCompatActivity {
     private Button btn1, btn2;
@@ -20,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         btn2 = findViewById(R.id.btn2);
 
         notificationManagerCompat = NotificationManagerCompat.from(this);
+
+        createChannel channel = new createChannel(this);
+        channel.channelCreate();
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,25 +42,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void displayNotification1(){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this,"channel1")
+        Notification builder = new NotificationCompat.Builder(this,createChannel.CHANNEL1)
                 .setSmallIcon(R.drawable.ic_sms)
                 .setContentTitle("First Message")
                 .setContentText("This is First Message")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE).build();
 
-        notificationManagerCompat.notify(1,builder.build());
+        notificationManagerCompat.notify(1,builder);
 
     }
 
     private void displayNotification2(){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),"channel2")
+        Notification builder = new NotificationCompat.Builder(this,createChannel.CHANNEL2)
                 .setSmallIcon(R.drawable.ic_sms)
                 .setContentTitle("Second Message")
                 .setContentText("This is Second Message")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE).build();
 
-        notificationManagerCompat.notify(2,builder.build());
+        notificationManagerCompat.notify(2,builder);
     }
 }
